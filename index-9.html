@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Kast Flow يساعد عيادات الأسنان على تنظيم استفسارات المرضى ومتابعتها وتحويل المزيد منها إلى مواعيد.">
+  <title>Kast Flow | تجربة تواصل أفضل لعيادتك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080e19;
+      --surface: #101a2b;
+      --surface-2: #142238;
+      --blue: #2878f0;
+      --blue-2: #58a0ff;
+      --cyan: #83d7ff;
+      --white: #f7faff;
+      --muted: #a9b7ca;
+      --line: rgba(172, 199, 235, .14);
+      --radius: 24px;
+      --shadow: 0 24px 70px rgba(0,0,0,.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 85% 5%, rgba(40,120,240,.18), transparent 34rem),
+        radial-gradient(ellipse at 0% 48%, rgba(40,120,240,.10), transparent 30rem),
+        var(--bg);
+      color: var(--white);
+      font-family: "Alexandria", "Tahoma", sans-serif;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .container { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 22px 0; gap: 18px;
+    }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:800; letter-spacing:.2px; }
+    .brand-mark {
+      width:39px; height:39px; border-radius:13px; display:grid; place-items:center;
+      background:linear-gradient(145deg,var(--blue-2),#1454c8);
+      box-shadow:0 8px 24px rgba(40,120,240,.35); font-size:20px;
+    }
+    .brand small { display:block; color:var(--muted); font-size:9px; font-weight:500; letter-spacing:2px; line-height:1.3; }
+    .nav-link { color:#d7e4f7; font-size:13px; }
+    .nav-cta, .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:9px;
+      border:1px solid rgba(255,255,255,.12); border-radius:14px;
+      padding:12px 18px; font:inherit; font-size:13px; font-weight:700;
+      transition:.2s ease; cursor:pointer;
+    }
+    .nav-cta, .btn-primary {
+      color:white; background:linear-gradient(135deg,var(--blue-2),#1760d6);
+      box-shadow:0 10px 28px rgba(40,120,240,.22);
+    }
+    .nav-cta:hover, .btn:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    .btn-secondary { background:rgba(255,255,255,.045); color:#e8f1ff; }
+    .hero { padding:76px 0 82px; display:grid; grid-template-columns:1.05fr .95fr; gap:55px; align-items:center; }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:8px; color:#a9d4ff;
+      border:1px solid rgba(88,160,255,.25); background:rgba(40,120,240,.10);
+      padding:7px 12px; border-radius:99px; font-size:11px; font-weight:600;
+    }
+    .dot { width:7px; height:7px; background:#63c5ff; border-radius:50%; box-shadow:0 0 12px #63c5ff; }
+    h1 { font-size:clamp(34px,5vw,58px); line-height:1.38; letter-spacing:-1.8px; margin:20px 0 18px; font-weight:800; }
+    .gradient-text { background:linear-gradient(90deg,#a7d9ff,#4d91ff 72%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero-copy { color:var(--muted); font-size:clamp(14px,1.4vw,16px); max-width:590px; margin:0 0 28px; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .trust-line { margin-top:24px; color:#8295ae; font-size:11px; display:flex; gap:9px; align-items:center; }
+    .trust-line span { color:#72c6ff; font-size:16px; }
+    .visual-wrap { position:relative; min-width:0; }
+    .glow { position:absolute; inset:12% 8%; background:#1e70e8; filter:blur(85px); opacity:.23; }
+    .dashboard {
+      position:relative; border:1px solid rgba(160,195,240,.18); border-radius:27px;
+      background:linear-gradient(145deg,rgba(22,37,60,.97),rgba(11,20,34,.97));
+      padding:20px; box-shadow:var(--shadow); transform:rotate(-1deg);
+    }
+    .dash-head { display:flex; justify-content:space-between; align-items:center; padding-bottom:17px; border-bottom:1px solid var(--line); }
+    .dash-title { font-size:12px; font-weight:700; }
+    .live { color:#75d9b0; font-size:10px; display:flex; align-items:center; gap:6px; }
+    .live:before { content:""; width:6px; height:6px; border-radius:50%; background:#55d69d; }
+    .dash-label { color:#91a5bf; font-size:10px; margin:17px 0 9px; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; }
+    .stat { background:rgba(255,255,255,.045); border:1px solid var(--line); border-radius:14px; padding:12px 10px; min-width:0; }
+    .stat strong { display:block; font-size:21px; color:#f5f9ff; direction:ltr; text-align:right; }
+    .stat span { color:#91a5bf; font-size:9px; }
+    .inbox { margin-top:14px; background:rgba(255,255,255,.035); border:1px solid var(--line); border-radius:16px; padding:14px; }
+    .inbox-top { display:flex; justify-content:space-between; color:#cbd9eb; font-size:11px; margin-bottom:12px; }
+    .chat-row { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-top:1px solid rgba(255,255,255,.06); }
+    .avatar { width:30px; height:30px; flex:0 0 30px; border-radius:10px; display:grid; place-items:center; background:rgba(40,120,240,.2); color:#9dcbff; font-size:12px; }
+    .chat-text { min-width:0; flex:1; }
+    .chat-text b { display:block; font-size:10px; color:#e9f2ff; }
+    .chat-text small { display:block; color:#91a5bf; font-size:9px; overflow-wrap:anywhere; }
+    .tag { color:#7ce0b5; background:rgba(51,190,133,.1); border-radius:7px; padding:3px 6px; font-size:8px; white-space:nowrap; }
+    .floating-note {
+      position:absolute; left:-18px; bottom:23px; background:#f6faff; color:#14243a;
+      padding:12px 15px; border-radius:15px; box-shadow:var(--shadow); font-size:10px;
+      display:flex; align-items:center; gap:9px; transform:rotate(2deg);
+    }
+    .floating-note b { display:block; font-size:12px; }
+    .floating-icon { width:30px; height:30px; display:grid; place-items:center; border-radius:10px; background:#e3f1ff; color:#1768db; font-size:16px; }
+    section { padding:72px 0; }
+    .section-head { max-width:680px; margin:0 auto 34px; text-align:center; }
+    .kicker { color:#79baff; font-size:11px; font-weight:700; }
+    h2 { font-size:clamp(25px,3.5vw,38px); line-height:1.5; margin:8px 0 12px; letter-spacing:-.7px; }
+    .section-head p { color:var(--muted); font-size:13px; margin:0; }
+    .problem-grid, .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    .panel {
+      background:linear-gradient(145deg,rgba(19,32,52,.92),rgba(13,23,38,.92));
+      border:1px solid var(--line); border-radius:20px; padding:23px; min-width:0;
+    }
+    .panel-icon { width:42px; height:42px; border-radius:13px; display:grid; place-items:center; color:#8ec7ff; background:rgba(40,120,240,.14); font-size:19px; margin-bottom:15px; }
+    .panel h3 { font-size:15px; margin:0 0 8px; }
+    .panel p { color:var(--muted); font-size:11px; margin:0; line-height:2; }
+    .funnel { width:min(100%,720px); margin:0 auto 30px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .funnel-step {
+      min-height:72px; display:flex; align-items:center; gap:15px; padding:13px 20px;
+      border:1px solid rgba(120,180,255,.22); border-radius:15px;
+      background:linear-gradient(100deg,rgba(40,120,240,.18),rgba(19,32,52,.95));
+      box-shadow:0 10px 25px rgba(0,0,0,.12); position:relative;
+    }
+    .funnel-step:after { content:"↓"; position:absolute; bottom:-20px; right:50%; transform:translateX(50%); color:#65adff; font-size:17px; z-index:2; }
+    .funnel-step:last-child:after { display:none; }
+    .funnel-1 { width:100%; }
+    .funnel-2 { width:88%; }
+    .funnel-3 { width:76%; }
+    .funnel-4 { width:64%; background:linear-gradient(100deg,rgba(40,120,240,.30),rgba(19,32,52,.98)); }
+    .funnel-number { width:34px; height:34px; flex:0 0 34px; border-radius:11px; display:grid; place-items:center; background:rgba(73,151,255,.18); color:#9acaff; font-size:11px; font-weight:800; direction:ltr; }
+    .funnel-step b { display:block; font-size:13px; }
+    .funnel-step small { display:block; color:#9eafc5; font-size:10px; margin-top:2px; }
+    .loss-card { display:flex; align-items:center; justify-content:space-between; gap:25px; padding:25px 28px; border:1px solid rgba(88,160,255,.24); border-radius:22px; background:linear-gradient(115deg,rgba(40,120,240,.16),rgba(16,26,43,.95)); }
+    .loss-copy { max-width:520px; }
+    .loss-copy h3 { font-size:19px; margin:7px 0; }
+    .loss-copy p { color:var(--muted); font-size:11px; margin:0; }
+    .loss-number { min-width:155px; text-align:center; padding:14px 18px; border-radius:16px; background:rgba(5,12,22,.48); border:1px solid var(--line); }
+    .loss-number strong { display:block; color:#8fc7ff; font-size:38px; line-height:1.25; direction:ltr; }
+    .loss-number span { display:block; color:#e6f1ff; font-size:12px; font-weight:700; }
+    .loss-number small { display:block; color:#8fa2ba; font-size:8px; margin-top:6px; }
+    .problem-question { margin:38px auto 0; }
+    .problem-question h2 { font-size:clamp(23px,3vw,32px); }
+    .workflow { background:linear-gradient(180deg,rgba(18,35,58,.55),rgba(8,14,25,0)); border-block:1px solid rgba(255,255,255,.045); }
+    .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; counter-reset:step; }
+    .step { position:relative; padding:22px 18px; border:1px solid var(--line); border-radius:18px; background:rgba(16,26,43,.75); }
+    .step-num { color:#6db3ff; font-size:11px; font-weight:800; direction:ltr; text-align:right; }
+    .step h3 { font-size:13px; margin:12px 0 7px; }
+    .step p { color:var(--muted); font-size:10px; margin:0; }
+    .demo-layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:36px; align-items:center; }
+    .demo-copy p { color:var(--muted); font-size:13px; }
+    .check-list { list-style:none; padding:0; margin:20px 0 0; display:grid; gap:11px; }
+    .check-list li { color:#dce9fa; font-size:12px; display:flex; gap:10px; align-items:flex-start; }
+    .check-list li:before { content:"✓"; color:#71dcb3; font-weight:800; }
+    .phone {
+      width:min(100%,390px); margin:auto; border:7px solid #26364c; border-radius:34px;
+      background:#eef4fa; color:#14243a; overflow:hidden; box-shadow:var(--shadow);
+    }
+    .phone-top { background:#f8fbff; padding:15px; display:flex; gap:10px; align-items:center; border-bottom:1px solid #dce6f1; }
+    .phone-top .avatar { background:#dcecff; color:#2168c7; }
+    .phone-top b { font-size:11px; display:block; }
+    .phone-top small { font-size:9px; color:#71839a; }
+    .messages { padding:17px 13px 20px; background:#e9f0f7; min-height:285px; }
+    .bubble { max-width:88%; padding:10px 12px; border-radius:13px; font-size:10px; line-height:1.9; margin-bottom:10px; box-shadow:0 2px 5px rgba(15,35,60,.06); }
+    .bubble.in { background:white; border-top-right-radius:4px; }
+    .bubble.out { background:#d7f5e4; border-top-left-radius:4px; margin-right:auto; }
+    .bubble-time { display:block; text-align:left; color:#8192a5; font-size:8px; margin-top:3px; }
+    .disclaimer { color:#9aabc0; font-size:9px; margin-top:13px; }
+    .cta {
+      text-align:center; padding:55px 25px; border:1px solid rgba(100,167,255,.23);
+      border-radius:28px; background:radial-gradient(ellipse at 50% 0%,rgba(40,120,240,.22),transparent 65%),#101b2d;
+      box-shadow:var(--shadow);
+    }
+    .cta p { color:var(--muted); font-size:13px; max-width:580px; margin:0 auto 23px; }
+    .cta-contact { margin-top:15px; color:#9aacc3; font-size:10px; }
+    .cta-contact a { color:#a8d3ff; direction:ltr; unicode-bidi:embed; }
+    footer { padding:28px 0 36px; color:#7f91aa; font-size:10px; }
+    .footer-inner { display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; border-top:1px solid var(--line); padding-top:22px; }
+    .footer-inner b { color:#dbe9fb; }
+    @media (max-width:800px) {
+      .hero { grid-template-columns:1fr; gap:38px; padding:48px 0 60px; }
+      .hero-copy { max-width:650px; }
+      .visual-wrap { width:min(100%,560px); margin:auto; }
+      .demo-layout { grid-template-columns:1fr; gap:28px; }
+      .steps { grid-template-columns:repeat(2,1fr); }
+    }
+    @media (max-width:560px) {
+      .container { width:min(100% - 28px,1120px); }
+      .nav { padding:16px 0; }
+      .nav-link { display:none; }
+      .nav-cta { padding:10px 12px; font-size:10px; }
+      .brand { font-size:14px; }
+      .brand-mark { width:34px; height:34px; }
+      .hero { padding:39px 0 48px; gap:31px; }
+      h1 { font-size:clamp(31px,9vw,43px); letter-spacing:-1.2px; }
+      .hero-copy { font-size:13px; }
+      .actions { display:grid; grid-template-columns:1fr; }
+      .btn { width:100%; padding:13px 15px; }
+      .dashboard { padding:14px; border-radius:21px; }
+      .stat { padding:10px 7px; }
+      .stat strong { font-size:17px; }
+      .stat span { font-size:8px; }
+      .floating-note { left:-3px; bottom:10px; padding:9px 11px; }
+      section { padding:55px 0; }
+      .problem-grid, .feature-grid { grid-template-columns:1fr; }
+      .panel { padding:19px; }
+      .steps { grid-template-columns:1fr 1fr; gap:9px; }
+      .step { padding:16px 13px; }
+      .step h3 { font-size:11px; }
+      .step p { font-size:9px; }
+      .phone { width:min(100%,350px); }
+      .cta { padding:38px 18px; border-radius:22px; }
+      .loss-card { flex-direction:column; align-items:stretch; padding:20px; gap:17px; }
+      .loss-number { min-width:0; }
+      .funnel { gap:7px; }
+      .funnel-step { min-height:68px; padding:11px 13px; gap:10px; }
+      .funnel-step b { font-size:11px; }
+      .funnel-step small { font-size:9px; }
+      .funnel-2 { width:94%; }
+      .funnel-3 { width:86%; }
+      .funnel-4 { width:78%; }
+    }
+    @media (max-width:360px) {
+      .container { width:calc(100% - 22px); }
+      .steps { grid-template-columns:1fr; }
+      .stats { gap:6px; }
+      .stat strong { font-size:15px; }
+    }
+    @media (prefers-reduced-motion:reduce) { html{scroll-behavior:auto} *,*:before,*:after{transition:none!important} }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <nav class="nav" aria-label="التنقل الرئيسي">
+      <a class="brand" href="#top" aria-label="Kast Flow">
+        <span class="brand-mark">K</span>
+        <span>KAST FLOW<small>BETTER PATIENT JOURNEYS</small></span>
+      </a>
+      <a class="nav-link" href="#how">كيف تعمل التجربة؟</a>
+      <a class="nav-link" href="#features">ما الذي نقدمه؟</a>
+      <a class="nav-cta" href="#contact">ناقش احتياج عيادتك <span>←</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="container hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> تجربة تواصل مصممة لعيادات الأسنان</div>
+        <h1>كل استفسار من مريضك يستحق <span class="gradient-text">متابعة أفضل.</span></h1>
+        <p class="hero-copy">Kast Flow تساعد عيادات الأسنان على تنظيم استقبال الاستفسارات، الرد على الأسئلة المتكررة، ومتابعة المهتمين — حتى لا تضيع فرصة الحجز وسط ضغط العمل اليومي.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact">اكتشف كيف يمكننا المساعدة <span>←</span></a>
+          <a class="btn btn-secondary" href="#how">شاهد طريقة العمل</a>
+        </div>
+        <div class="trust-line"><span>✦</span> تجربة أوضح للمريض، وتنظيم أسهل لفريق الاستقبال.</div>
+      </div>
+
+      <div class="visual-wrap" aria-label="تصور توضيحي للوحة متابعة الاستفسارات">
+        <div class="glow"></div>
+        <div class="dashboard">
+          <div class="dash-head">
+            <div class="dash-title">لوحة متابعة العيادة</div>
+            <div class="live">نموذج توضيحي</div>
+          </div>
+          <div class="dash-label">نظرة على رحلة الاستفسارات</div>
+          <div class="stats">
+            <div class="stat"><strong>24/7</strong><span>استقبال الاستفسارات</span></div>
+            <div class="stat"><strong>01</strong><span>مكان موحد للمتابعة</span></div>
+            <div class="stat"><strong>↗</strong><span>خطوات حجز أوضح</span></div>
+          </div>
+          <div class="inbox">
+            <div class="inbox-top"><span>آخر الاستفسارات</span><span>عرض تجريبي</span></div>
+            <div class="chat-row">
+              <div class="avatar">م</div>
+              <div class="chat-text"><b>استفسار عن زراعة الأسنان</b><small>هل يمكن معرفة خطوات العلاج؟</small></div>
+              <span class="tag">تم الرد</span>
+            </div>
+            <div class="chat-row">
+              <div class="avatar">س</div>
+              <div class="chat-text"><b>استفسار عن التقويم</b><small>أرغب بمعرفة موعد مناسب للاستشارة</small></div>
+              <span class="tag">متابعة</span>
+            </div>
+            <div class="chat-row">
+              <div class="avatar">ع</div>
+              <div class="chat-text"><b>استفسار عن تبييض الأسنان</b><small>طلب تفاصيل الخدمة والسعر</small></div>
+              <span class="tag">جديد</span>
+            </div>
+          </div>
+        </div>
+        <div class="floating-note"><span class="floating-icon">✓</span><span><b>لا تترك الاستفسار معلقاً</b>متابعة منظمة من أول رسالة</span></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">أين تضيع فرص الحجز؟</span>
+          <h2>المريض يمر برحلة…<br>وفي كل خطوة توجد فرصة قد تضيع.</h2>
+          <p>من مشاهدة محتوى العيادة إلى اتخاذ قرار الحجز، يحتاج المريض إلى تجربة تواصل واضحة وسريعة.</p>
+        </div>
+
+        <div class="funnel" aria-label="قمع رحلة العميل من مشاهدة المحتوى إلى اتخاذ القرار">
+          <div class="funnel-step funnel-1">
+            <span class="funnel-number">01</span>
+            <div><b>يشوف محتوى العيادة</b><small>يتعرف على الخدمة ويبدأ الاهتمام</small></div>
+          </div>
+          <div class="funnel-step funnel-2">
+            <span class="funnel-number">02</span>
+            <div><b>يرسل رسالة في الخاص</b><small>يسأل عن السعر أو التفاصيل أو الموعد</small></div>
+          </div>
+          <div class="funnel-step funnel-3">
+            <span class="funnel-number">03</span>
+            <div><b>ينتظر الرد</b><small>قد يتأخر الرد أو لا يجد متابعة واضحة</small></div>
+          </div>
+          <div class="funnel-step funnel-4">
+            <span class="funnel-number">04</span>
+            <div><b>يتخذ القرار النهائي</b><small>يحجز مع العيادة… أو يتجه إلى خيار آخر</small></div>
+          </div>
+        </div>
+
+        <div class="loss-card">
+          <div class="loss-copy">
+            <span class="kicker">مثال توضيحي لحجم الفرصة</span>
+            <h3>50 عميلاً مهتماً من المحتوى</h3>
+            <p>إذا ضاع 30% منهم بسبب فجوات في الرد أو المتابعة، فقد تكون هناك فرصة إيراد غير محققة تُقدّر بـ:</p>
+          </div>
+          <div class="loss-number">
+            <strong>4,500</strong>
+            <span>ريال شهرياً</span>
+            <small>قيمة افتراضية توضيحية وليست نتيجة فعلية لعيادة</small>
+          </div>
+        </div>
+
+        <div class="section-head problem-question">
+          <h2>لكن أين المشكلة التي تسبب ضياعهم؟</h2>
+          <p>هل هي سرعة الرد؟ طريقة الإجابة؟ غياب المتابعة؟ أم خطوة أخرى في رحلة المريض؟ نحتاج أن نراجع المحادثة والرحلة كاملة حتى نحدد نقطة التسرب بدقة.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow" id="how">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">رحلة أكثر تنظيماً</span>
+          <h2>من أول رسالة إلى طلب موعد</h2>
+          <p>نرتب نقاط التواصل الأساسية لتكون رحلة المريض أسهل، وفريق العيادة أكثر وضوحاً في المتابعة.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-num">01 / الاستقبال</div><h3>وصول استفسار المريض</h3><p>تبدأ الرحلة من واتساب أو قناة التواصل المعتمدة لدى العيادة.</p></article>
+          <article class="step"><div class="step-num">02 / الرد</div><h3>إجابة أولية واضحة</h3><p>تُقدّم معلومات الخدمات والأسئلة الشائعة وفق ما تعتمده العيادة.</p></article>
+          <article class="step"><div class="step-num">03 / التنظيم</div><h3>فهم احتياج المريض</h3><p>تُجمع التفاصيل المهمة مثل الخدمة المطلوبة والوقت المناسب للتواصل.</p></article>
+          <article class="step"><div class="step-num">04 / المتابعة</div><h3>الانتقال إلى الحجز</h3><p>يصل الطلب للفريق المختص لمتابعته وتأكيد الموعد حسب إجراءات العيادة.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">كيف نساعد عيادتك؟</span>
+          <h2>أدوات تخدم تجربة المريض وفريقك</h2>
+          <p>يتم تحديد نطاق العمل بناءً على طريقة استقبال المرضى والإجراءات الحالية في عيادتك.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="panel"><div class="panel-icon">✉</div><h3>ردود منظمة على واتساب</h3><p>تنظيم الردود الأولية على أسئلة الخدمات، المواعيد، والمعلومات التي توفرها العيادة.</p></article>
+          <article class="panel"><div class="panel-icon">◎</div><h3>تأهيل الاستفسارات</h3><p>معرفة الخدمة التي يهتم بها المريض وتسجيل التفاصيل اللازمة لتسهيل التواصل.</p></article>
+          <article class="panel"><div class="panel-icon">◷</div><h3>متابعة المهتمين</h3><p>إعداد خطوات متابعة مناسبة للمرضى الذين يحتاجون وقتاً قبل اتخاذ قرار الحجز.</p></article>
+          <article class="panel"><div class="panel-icon">▤</div><h3>تنظيم بيانات التواصل</h3><p>رؤية أوضح للاستفسارات وحالتها، بدلاً من الاعتماد على تذكر كل محادثة يدوياً.</p></article>
+          <article class="panel"><div class="panel-icon">↗</div><h3>تسليم الطلب للفريق</h3><p>توجيه طلبات الحجز أو الحالات التي تحتاج تدخلاً بشرياً إلى موظف العيادة.</p></article>
+          <article class="panel"><div class="panel-icon">⚙</div><h3>تجربة تناسب إجراءاتك</h3><p>نصمم تدفق التواصل وفق الخدمات، أوقات العمل، وسياسة الحجز الخاصة بعيادتك.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container demo-layout">
+        <div class="demo-copy">
+          <span class="kicker">مثال على المحادثة</span>
+          <h2>المريض يعرف الخطوة التالية دون تعقيد.</h2>
+          <p>هذا مثال توضيحي لطريقة استقبال استفسار عن خدمة في عيادة أسنان. تتم مراجعة المعلومات والردود واعتمادها من العيادة قبل التشغيل.</p>
+          <ul class="check-list">
+            <li>ترحيب سريع وواضح بالمريض.</li>
+            <li>تحديد الخدمة التي يرغب بمعرفة تفاصيلها.</li>
+            <li>تقديم معلومات معتمدة دون تشخيص طبي.</li>
+            <li>تسهيل طلب موعد أو التواصل مع موظف.</li>
+          </ul>
+          <div class="disclaimer">المحادثة المعروضة نموذج تصميمي وليست محادثة حقيقية أو نتيجة عميل.</div>
+        </div>
+        <div class="phone" aria-label="نموذج محادثة واتساب توضيحي">
+          <div class="phone-top"><div class="avatar">K</div><div><b>استقبال عيادة الأسنان</b><small>مثال توضيحي لتجربة المريض</small></div></div>
+          <div class="messages">
+            <div class="bubble in">السلام عليكم، حاب أستفسر عن زراعة الأسنان.<span class="bubble-time">10:14 ص</span></div>
+            <div class="bubble out">وعليكم السلام ورحمة الله، أهلاً بك 🌿 يسعدنا مساعدتك. هل ترغب بمعرفة خطوات الزراعة أم حجز استشارة مع الفريق؟<span class="bubble-time">10:14 ص</span></div>
+            <div class="bubble in">أبغى أعرف التفاصيل وأحجز استشارة.<span class="bubble-time">10:15 ص</span></div>
+            <div class="bubble out">بكل سرور. يمكننا تسجيل طلبك ليقوم فريق العيادة بالتواصل معك وتوضيح التفاصيل وتنسيق موعد مناسب. ما الوقت الأنسب لك؟<span class="bubble-time">10:15 ص</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="cta">
+          <span class="kicker">مكالمة مجانية · 30 دقيقة</span>
+          <h2>احجز مكالمة زوم عشان تعرف أين يضيع عملاؤك.</h2>
+          <p>نراجع رحلة المريض في عيادتك، ونبحث عن نقاط التسرب في الرد والمتابعة والحجز، ثم نناقش فرص التحسين المناسبة لفريقك.</p>
+          <a class="btn btn-primary" href="https://calendly.com/hichemkastali/30min" target="_blank" rel="noopener">احجز مكالمة زوم مجانية <span>←</span></a>
+          <div class="cta-contact">تقدر تتواصل معنا أيضاً عبر واتساب: <a href="https://wa.me/213697960029" target="_blank" rel="noopener" dir="ltr">+213 697 960 029</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div><b>KAST FLOW</b> — Better patient journeys.</div>
+      <div>حلول تواصل ومتابعة مصممة لعيادات الأسنان.</div>
+    </div>
+  </footer>
+</body>
+</html>
